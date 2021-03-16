@@ -4,5 +4,8 @@
 ```
 0.4_uusi_muistiinpano.txt
 ```
-Kuva:
+
+* Kuva:
+```
 0.4_uusi_muistiinpano.png
+```
