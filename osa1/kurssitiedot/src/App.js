@@ -11,11 +11,11 @@ const Part = ({name, count}) => {
 }
 
 const Content = (props) => {
-  return (
+  const p = props.content
+  const listItems = p.map((p) => <Part name={p.name} count={p.exercises} />)
+  return(
     <div>
-      <Part name={props.content[0].name} count={props.content[0].exercises} />
-      <Part name={props.content[1].name} count={props.content[1].exercises} />
-      <Part name={props.content[2].name} count={props.content[2].exercises} />
+      {listItems}
     </div>
   )
 }
