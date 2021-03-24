@@ -7,5 +7,5 @@ React code
 App.js
 index.js
 * components
-  * Course.js
+  Course.js
 ```
