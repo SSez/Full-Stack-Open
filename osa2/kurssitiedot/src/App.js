@@ -47,10 +47,7 @@ const App = () => {
     }
   ]
   
-  const mapCourses = courses.map((x) => {
-    return (<Course key={x.id} course={x} />);
-  })
-
+  const mapCourses = courses.map( (x) => <Course key={x.id} course={x} /> )
   return (
     <div>
       <h1>Web development curriculum</h1>
