@@ -1,2 +1,10 @@
 # Full Stack Open 2021
-### Samuel Antila
+## Samuel Antila
+
+## Valmiit
+
+### osa0
+### osa1
+* kurssitiedot
+* unicafe
+* anekdootit
