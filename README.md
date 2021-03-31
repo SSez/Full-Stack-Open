@@ -1,7 +1,7 @@
 # Full Stack Open 2021
 ## Samuel Antila
 
-## Valmiit
+## Completed assignments:
 
 ### osa0
 ### osa1
