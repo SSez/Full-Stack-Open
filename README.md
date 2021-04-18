@@ -8,3 +8,7 @@
 * kurssitiedot
 * unicafe
 * anekdootit
+### osa2
+* kurssitiedot
+* maiden-tiedot
+* puhelinluettelo
