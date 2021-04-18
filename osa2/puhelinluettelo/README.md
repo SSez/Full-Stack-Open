@@ -8,6 +8,9 @@ App.js
 index.js
 * components
   Filter.js
+  Notification.js
   PersonForm.js
   Persons.js
+* services
+  db.js
 ```
