@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
-import Notification from "./components/Notification";
+import Notification from "./components/Notification"
 import Service from './services/db'
 
 const App = () => {
@@ -31,14 +31,14 @@ const App = () => {
           let personObj = [...persons]
           personObj[index] = personObject
           personObj[index].id = id
-          setPersons(personObj);
+          setPersons(personObj)
           setMessage({
             message: `updated ${newName} number to ${newNumber}`,
             type: "success"
           })
           setTimeout(() => { setMessage(null) }, 5000)
         }).catch((error) => {
-          console.error(error);
+          console.error(error)
           setMessage({
             message: `Failed to update ${newName} number`,
             type: "error"
@@ -57,7 +57,7 @@ const App = () => {
         })
         setTimeout(() => { setMessage(null) }, 5000)
       }).catch((error) => {
-        console.error(error);
+        console.error(error)
         setMessage({
           message: `Failed to add ${newName} phonebook`,
           type: "error"
@@ -82,7 +82,7 @@ const App = () => {
         })
         setTimeout(() => { setMessage(null) }, 5000)
       }).catch((error) => {
-        console.error(error);
+        console.error(error)
         setMessage({
           message: `Information of ${persons[index].name} has already been removed from the server.`,
           type: "error"
