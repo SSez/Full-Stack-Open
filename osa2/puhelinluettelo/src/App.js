@@ -2,14 +2,15 @@ import React, { useState, useEffect } from 'react'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
-
+import Notification from "./components/Notification";
 import Service from './services/db'
 
 const App = () => {
   const [persons, setPersons] = useState([])
-  const [ newName, setNewName ] = useState('')
+  const [newName, setNewName ] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [nameFilter, setNameFilter] = useState('')
+  const [message, setMessage] = useState(null)
 
   useEffect(() => { Service.getAll().then(initialPersons => { setPersons(initialPersons) })}, [])
 
@@ -21,10 +22,73 @@ const App = () => {
       number: newNumber
     }
     if (persons.some(person => person.name === newName)) {
-      alert(`${newName} is already added to phonebook`)
+      if (persons.some(person => person.number === newNumber)) {
+        alert(`${newName} is already added to phonebook`)
+      } else if(window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+        const id = persons.find(x => x.name === newName).id
+        const index = persons.findIndex(x => x.id === Number(id))
+        Service.update(id, personObject).then(() => {
+          let personObj = [...persons]
+          personObj[index] = personObject
+          personObj[index].id = id
+          setPersons(personObj);
+          setMessage({
+            message: `updated ${newName} number to ${newNumber}`,
+            type: "success"
+          })
+          setTimeout(() => { setMessage(null) }, 5000)
+        }).catch((error) => {
+          console.error(error);
+          setMessage({
+            message: `Failed to update ${newName} number`,
+            type: "error"
+          })
+          setTimeout(() => { setMessage(null) }, 5000)
+        })
+      }
     } else {
-      setPersons(persons.concat(personObject))
-      setNewName('')
+      Service.create(personObject).then(returnedPerson => {
+        setPersons(persons.concat(returnedPerson))
+        setNewName('')
+        setNewNumber('')
+        setMessage({
+          message: `${newName} added to phonebook`,
+          type: "success"
+        })
+        setTimeout(() => { setMessage(null) }, 5000)
+      }).catch((error) => {
+        console.error(error);
+        setMessage({
+          message: `Failed to add ${newName} phonebook`,
+          type: "error"
+        })
+        setTimeout(() => { setMessage(null) }, 5000)
+      })
+    }
+  }
+
+  const deletePerson = (event) => {
+    event.preventDefault()
+    let id = event.target.getAttribute("data-id")
+    const index = persons.findIndex(x => x.id === Number(id))
+    if(window.confirm(`Delete ${persons[index].name} ?`)) {
+      Service.del(id).then(() => {
+        let personObj = [...persons]
+        personObj.splice(index, 1)
+        setPersons(personObj)
+        setMessage({
+          message: `Succesfully removed ${persons[index].name} from phonebook`,
+          type: "success"
+        })
+        setTimeout(() => { setMessage(null) }, 5000)
+      }).catch((error) => {
+        console.error(error);
+        setMessage({
+          message: `Information of ${persons[index].name} has already been removed from the server.`,
+          type: "error"
+        })
+        setTimeout(() => { setMessage(null) }, 5000)
+    })
     }
   }
 
@@ -35,11 +99,12 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification note={message} />
       <Filter filter={nameFilter} handleFilter={handleNameFilter} />
       <h3>Add a new</h3>
       <PersonForm newName={newName} newNumber={newNumber} addPerson={addPerson} handleNumberChange={handleNumberChange} handlePersonChange={handlePersonChange} />
       <h3>Numbers</h3>
-      <Persons persons={persons} filter={nameFilter} />
+      <Persons persons={persons} filter={nameFilter} deletePerson={deletePerson}  />
     </div>
   )
 }

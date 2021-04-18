@@ -7,9 +7,9 @@ const Persons = (props) => {
         return person.name.toLowerCase().includes(props.filter.toLowerCase())
     })
   }
-  const mapPersons = personList.map( (x) => <li key={x.id}>{x.name} {x.number} </li>)
+  const mapPersons = personList.map( (x) => <p key={x.id}>{x.name} {x.number} <button data-id={x.id} onClick={props.deletePerson}>Delete</button></p> )
   return (
-    <div><ul>{mapPersons}</ul></div>
+    <div>{mapPersons}</div>
   )
 }
 
