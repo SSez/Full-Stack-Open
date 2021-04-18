@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react"
 import Service from './services/db'
 import Filter from './components/Filter'
 import Countries from './components/Countries'
