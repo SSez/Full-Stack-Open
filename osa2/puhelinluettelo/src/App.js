@@ -30,7 +30,8 @@ const App = () => {
         setTimeout(() => { setMessage(null) }, 5000)
       } else if(window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
         const id = persons.find(x => x.name === newName).id
-        const index = persons.findIndex(x => x.id === Number(id))
+        //const index = persons.findIndex(x => x.id === Number(id))
+        const index = persons.findIndex(x => x.id === id)
         Service.update(id, personObject).then(() => {
           let personObj = [...persons]
           personObj[index] = personObject
