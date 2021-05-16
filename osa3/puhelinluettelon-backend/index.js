@@ -3,7 +3,7 @@ const express = require('express')
 const morgan = require("morgan")
 const cors = require("cors")
 const app = express()
-const Person = require("./models/db");
+const Person = require("./models/db")
 
 app.use(express.json())
 app.use(cors())
@@ -16,7 +16,7 @@ morgan.token("body",(req) => {
         return ""
     }
 })
-app.use(morgan(":method :url :status :response-time ms :body"));
+app.use(morgan(":method :url :status :response-time ms :body"))
 
 app.get('/', (req, res) => {
   res.send('<h1>Hello World!</h1>')
@@ -33,7 +33,7 @@ app.get("/api/persons", (request, response) => {
 })
 
 app.post("/api/persons", (request, response, next) => {
-  const body = request.body;
+  const body = request.body
   if (!body.name || !body.number) {
     return response.status(400).json({ 
       error: 'content missing' 
