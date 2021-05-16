@@ -15,3 +15,8 @@
 
 ### osa3
 * puhelinluettelon backend
+* puhelinluettelo full stack
+* tietokanta komentoriviltä
+* puhelinluettelo ja tietokanta
+* tietokantaa käyttävä versio internettiin
+* lint-konfiguraatio
