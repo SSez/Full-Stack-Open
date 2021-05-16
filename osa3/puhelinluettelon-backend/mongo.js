@@ -18,7 +18,7 @@ const PersonSchema = new mongoose.Schema({
     name: String,
     number: String
 })
-const Person = mongoose.model("Person",PersonSchema);
+const Person = mongoose.model("Person",PersonSchema)
 
 if(!newName || !newNumber) {
     Person.find({}).then((result) => {
