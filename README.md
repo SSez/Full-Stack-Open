@@ -12,3 +12,6 @@
 * kurssitiedot
 * maiden-tiedot
 * puhelinluettelo
+
+### osa3
+* puhelinluettelon backend
