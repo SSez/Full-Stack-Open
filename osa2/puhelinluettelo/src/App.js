@@ -63,8 +63,14 @@ const App = () => {
         setTimeout(() => { setMessage(null) }, 5000)
       }).catch((error) => {
         console.error(error)
+        /*
         setMessage({
           message: `Failed to add ${newName} phonebook`,
+          type: "error"
+        })
+        */
+        setMessage({
+          message: error.response.data,
           type: "error"
         })
         setTimeout(() => { setMessage(null) }, 5000)
