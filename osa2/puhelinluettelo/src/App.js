@@ -74,7 +74,8 @@ const App = () => {
   const deletePerson = (event) => {
     event.preventDefault()
     let id = event.target.getAttribute("data-id")
-    const index = persons.findIndex(x => x.id === Number(id))
+    //const index = persons.findIndex(x => x.id === Number(id))
+    const index = persons.findIndex(x => x.id === id)
     if(window.confirm(`Delete ${persons[index].name} ?`)) {
       Service.del(id).then(() => {
         let personObj = [...persons]
