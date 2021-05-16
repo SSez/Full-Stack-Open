@@ -23,7 +23,11 @@ const App = () => {
     }
     if (persons.some(person => person.name === newName)) {
       if (persons.some(person => person.number === newNumber)) {
-        alert(`${newName} is already added to phonebook`)
+        setMessage({
+          message: `${newName} is already added to phonebook`,
+          type: "error"
+        })
+        setTimeout(() => { setMessage(null) }, 5000)
       } else if(window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
         const id = persons.find(x => x.name === newName).id
         const index = persons.findIndex(x => x.id === Number(id))
