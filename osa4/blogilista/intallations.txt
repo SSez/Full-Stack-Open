@@ -1,0 +1,26 @@
+npm init
+npm install express
+npm update
+npm install --save-dev nodemon
+npm install morgan
+npm install cors
+npm install mongoose
+npm install dotenv
+npm install mongoose-unique-validator
+npm install bcrypt
+npm install jsonwebtoken
+npm install --save-dev jest
+npm install --save-dev cross-env
+
+npm install --save-dev supertest
+
+npm i -g npm
+npm i --save lodash
+
+npm install express-async-errors
+
+#npm install eslint --save-dev
+#node_modules/.bin/eslint --init
+
+# Run app
+npm run dev

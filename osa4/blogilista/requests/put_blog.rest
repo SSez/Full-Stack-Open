@@ -1,0 +1,10 @@
+PUT http://localhost:3003/api/blogs/60a5210e284be604f49b8b91
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYwYTUxZmJiMjg0YmU2MDRmNDliOGI4ZSIsImlhdCI6MTYyMTQzNDMwN30.Zd2L6-pbaNG-0P43r8gez0s2haDgSs_SV1xRobYfpe8
+
+{
+  "title": "blogi",
+  "author": "root",
+  "url": "github.com",
+  "likes": 0
+}
