@@ -54,7 +54,7 @@ describe('Blog app', function() {
     cy.get('#url').type('https://github.com')
     cy.contains('submit').click()
     cy.contains('view').click()
-    cy.contains('like').click()
+    cy.get('#btn-like').click()
     cy.contains('likes: 1')
   })
 
@@ -63,9 +63,9 @@ describe('Blog app', function() {
     cy.get('#title').type('testing delete')
     cy.get('#author').type('deletor')
     cy.get('#url').type('https://github.com')
-    cy.contains('submit').click()
+    cy.get('#create-blog').click()
     cy.contains('view').click()
-    cy.contains('delete').click()
+    cy.get('#btn-remove').click()
     cy.contains('Blog: testing delete')
   })
 
