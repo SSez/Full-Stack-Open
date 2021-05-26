@@ -64,4 +64,15 @@ const Blog = React.forwardRef((props, ref) => {
 
 Blog.displayName = 'Blog'
 
+Blog.propTypes = {
+  blog: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+  }).isRequired,
+  handleLike: PropTypes.func.isRequired,
+  handleRemove: PropTypes.func.isRequired,
+  own: PropTypes.bool.isRequired
+}
+
 export default Blog

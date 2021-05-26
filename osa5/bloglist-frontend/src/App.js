@@ -7,6 +7,7 @@ import Notification from './components/Notification'
 import Footer from './components/Footer'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import storage from './utils/storage'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -18,6 +19,11 @@ const App = () => {
   const blogFormRef = useRef()
 
   useEffect(() => { blogService.getAll().then(blogs => setBlogs(blogs)) }, [])
+
+  useEffect(() => {
+    const user = storage.loadUser()
+    setUser(user)
+  }, [])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogAppUser')
@@ -32,14 +38,13 @@ const App = () => {
     event.preventDefault()
     try {
       const user = await loginService.login({
-        username, password,
+        username, password
       })
-      blogService.setToken(user.token)
-      window.localStorage.setItem('loggedBlogAppUser', JSON.stringify(user))
-      setUser(user)
       setUsername('')
       setPassword('')
-    } catch (exception) {
+      setUser(user)
+      storage.saveUser(user)
+    } catch(exception) {
       setMessage({
         message: 'invalid username or password.',
         type: 'error'
@@ -48,9 +53,9 @@ const App = () => {
     }
   }
 
-  const logOut = () => {
-    window.localStorage.removeItem('loggedBlogAppUser')
+  const handleLogout = () => {
     setUser(null)
+    storage.logoutUser()
   }
 
   const loginForm = () => (
@@ -144,7 +149,7 @@ const App = () => {
       {user === null ?
         loginForm() :
         <div>
-          <p>{user.name} logged in</p> <button onClick={logOut}>log out</button>
+          <p>{user.name} logged in</p> <button onClick={handleLogout}>log out</button>
           {blogForm()}
         </div>
       }

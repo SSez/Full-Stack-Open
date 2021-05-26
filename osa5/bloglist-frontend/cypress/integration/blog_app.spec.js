@@ -47,54 +47,54 @@ describe('Blog app', function() {
     })
   })
 
-  it('a like button can be pressed', function() {
-    cy.contains('new blog').click()
-    cy.get('#title').type('testing')
-    cy.get('#author').type('Tester')
-    cy.get('#url').type('https://github.com')
-    cy.contains('submit').click()
-    cy.contains('view').click()
-    cy.get('#btn-like').click()
-    cy.contains('likes: 1')
-  })
-
-  it('a blog can be deleted', function() {
-    cy.contains('new blog').click()
-    cy.get('#title').type('testing delete')
-    cy.get('#author').type('deletor')
-    cy.get('#url').type('https://github.com')
-    cy.get('#create-blog').click()
-    cy.contains('view').click()
-    cy.get('#btn-remove').click()
-    cy.contains('Blog: testing delete')
-  })
-
-  describe('like multiple blogs.', function() {
+  describe('When several blogs creaded by many people exist', function() {
     beforeEach(function() {
-      cy.createBlog({ title: 'test blog 1', author: 'Tester', url: 'https://github.com' })
-      cy.createBlog({ title: 'test blog 2', author: 'Tester', url: 'https://github.com' })
-      cy.createBlog({ title: 'test blog 3', author: 'Tester', url: 'https://github.com' })
+      cy.login({ username: 'root', password: 'secret' })
+      cy.createBlog({ author: 'Tester', title: 'blog1', url: 'https://github.com' })
+      cy.createBlog({ author: 'Tester', title: 'blog2', url: 'https://github.com' })
+      cy.contains('logout').click()
+      cy.login({ username: 'test', password: 'secret' })
+      cy.createBlog({ author: 'Tester', title: 'blog3', url: 'https://github.com' })
+
+      cy.contains('blog1').parent().parent().as('blog1')
+      cy.contains('blog2').parent().parent().as('blog2')
+      cy.contains('blog3').parent().parent().as('blog3')
     })
-    it('show & like blogs', function () {
-      cy.get('#bloglist').find('#label-btn').should(function($blogs) {
-        expect($blogs).to.have.length(3)
-        $blogs.each(function(index) {
-          $blogs[index].click()
-        })
+
+    it('Blogs can be liked', function() {
+      cy.get('@blog2').contains('view').click()
+      cy.get('@blog2').contains('like').click()
+      cy.get('@blog2').contains('likes: 1')
+    })
+
+    it('The creator can delete a blog', function() {
+      cy.get('@blog3').contains('view').click()
+      cy.get('@blog3').contains('remove').click()
+      cy.contains('Blog: blog3')
+      cy.get('@blog2').contains('view').click()
+      cy.get('@blog2').should('not.contain', 'remove')
+    })
+
+    it('they are ordered by number of likes', function() {
+      cy.get('@blog1').contains('view').click()
+      cy.get('@blog2').contains('view').click()
+      cy.get('@blog3').contains('view').click()
+      cy.get('@blog1').contains('like').as('like1')
+      cy.get('@blog2').contains('like').as('like2')
+      cy.get('@blog3').contains('like').as('like3')
+
+      cy.get('@like2').click()
+      cy.get('@like1').click()
+      cy.get('@like1').click()
+      cy.get('@like3').click()
+      cy.get('@like3').click()
+      cy.get('@like3').click()
+
+      cy.get('.blog').then(blogs => {
+        cy.wrap(blogs[0]).contains('likes 3')
+        cy.wrap(blogs[1]).contains('likes 2')
+        cy.wrap(blogs[2]).contains('likes 1')
       })
-      cy.get('#btn-like').should(function($likeBtn) {
-        expect($likeBtn).to.have.length(3)
-        $likeBtn.each(function(index) {
-          for(let i = 0; i < index; i++) {
-            $likeBtn[index].click()
-          }
-        })
-      })
-      cy.get('#bloglist').find('#div-like').should(function($likes) {
-          expect($likes[0]).contain(2)
-          expect($likes[1]).contain(1)
-          expect($likes[2]).contain(0)
-        })
     })
   })
 })
