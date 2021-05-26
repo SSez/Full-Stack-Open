@@ -1,6 +1,7 @@
 import axios from 'axios'
 const baseUrl = '/api/blogs'
 import storage from '../utils/storage'
+
 const getConfig = () => {
   return {
     headers: { Authorization: `bearer ${storage.loadUser().token}` }
@@ -17,8 +18,8 @@ const create = (blog) => {
   return request.then(response => response.data)
 }
 
-const update = (blog) => {
-  const request = axios.put(`${baseUrl}/${blog.id}`, blog, getConfig())
+const update = (id, blog) => {
+  const request = axios.put(`${baseUrl}/${id}`, blog, getConfig())
   return request.then(response => response.data)
 }
 

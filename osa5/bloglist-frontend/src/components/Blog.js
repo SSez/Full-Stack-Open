@@ -1,4 +1,5 @@
 import React, { useState, useImperativeHandle } from 'react'
+import PropTypes from 'prop-types'
 
 const Blog = React.forwardRef((props, ref) => {
   const [visible, setVisible] = useState(false)
