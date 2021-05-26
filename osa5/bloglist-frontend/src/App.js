@@ -61,47 +61,34 @@ const App = () => {
     </Togglable>
   )
 
-  const addBlog = (blogObject) => {
-    blogFormRef.current.toggleVisibility()
-    blogService.create(blogObject).then(returnedBlog => {
-      setBlogs(blogs.concat(returnedBlog))
+  const createBlog = async (blogObject) => {
+    try {
+      blogFormRef.current.toggleVisibility()
+      const newBlog = await blogService.create(blogObject)
+      setBlogs(blogs.concat(newBlog))
       setMessage({
-        message: `a new blog: ${blogObject.title} written by ${blogObject.author} Added`,
+        message: `a new blog: ${newBlog.title} By ${newBlog.author} Added`,
         type: 'success'
       })
       setTimeout(() => { setMessage(null) }, 5000)
-    }).catch((error) => {
-      console.error(error.response.data)
+    } catch(exception) {
+      console.log(exception)
       setMessage({
-        message: error.response.data.error,
+        message: exception.response.data.error,
         type: 'error'
       })
       setTimeout(() => { setMessage(null) }, 5000)
-    })
-  }
-
-  const addLike = (id) => {
-    let blog = blogs.find(blog => blog.id === id)
-    let blogObject = {
-      'title': blog.title,
-      'author': blog.author,
-      'url': blog.url,
-      'likes': blog.likes + 1,
     }
-    blogService.update(blog.id, blogObject).then(returnedBlog => {
-      console.log(returnedBlog)
-      setBlogs(blogs.map(blog => blog.id !== id ? blog : returnedBlog))
-    }).catch((error) => {
-      console.error(error.response.data)
-      setMessage({
-        message: error.response.data.error,
-        type: 'error'
-      })
-      setTimeout(() => { setMessage(null) }, 5000)
-    })
   }
 
-  const removeBlog = async id => {
+  const handleLike = async (id) => {
+    const blog = blogs.find(b => b.id === id)
+    const likeBlog = { ...blog, likes: blog.likes + 1, user: blog.user.id }
+    await blogService.update(likeBlog)
+    setBlogs(blogs.map(b => b.id === id ? { ...blog, likes: blog.likes + 1 } : b))
+  }
+
+  const handleRemove = async id => {
     const blog = blogs.find(blog => blog.id === id)
     if(window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
       try {
@@ -125,12 +112,12 @@ const App = () => {
 
   const blogForm = () => (
     <Togglable buttonLabel='new blog' ref={blogFormRef}>
-      <BlogForm createBlog={addBlog} />
+      <BlogForm createBlog={createBlog} />
     </Togglable>
   )
 
   const blogData = (blog) => {
-    return <Blog key={blog.id} blog={blog} like={addLike} removeBlog={removeBlog} user={user}/>
+    return <Blog key={blog.id} blog={blog} handleLike={handleLike} handleRemove={handleRemove} user={user}/>
   }
 
   return (

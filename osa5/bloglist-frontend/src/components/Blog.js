@@ -11,11 +11,11 @@ const Blog = React.forwardRef((props, ref) => {
   }
 
   const like = () => {
-    props.like(props.blog.id)
+    props.handleLike(props.blog.id)
   }
 
   const remove = () => {
-    props.removeBlog(props.blog.id)
+    props.handleRemove(props.blog.id)
   }
 
   useImperativeHandle(ref, () => {
@@ -72,8 +72,7 @@ Blog.propTypes = {
     url: PropTypes.string.isRequired,
   }).isRequired,
   handleLike: PropTypes.func.isRequired,
-  handleRemove: PropTypes.func.isRequired,
-  own: PropTypes.bool.isRequired
+  handleRemove: PropTypes.func.isRequired
 }
 
 export default Blog

@@ -18,8 +18,8 @@ const create = (blog) => {
   return request.then(response => response.data)
 }
 
-const update = (id, blog) => {
-  const request = axios.put(`${baseUrl}/${id}`, blog, getConfig())
+const update = (blog) => {
+  const request = axios.put(`${baseUrl}/${blog.id}`, blog, getConfig())
   return request.then(response => response.data)
 }
 
