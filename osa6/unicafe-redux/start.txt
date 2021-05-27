@@ -1,0 +1,4 @@
+npx create-react-app unicafe-redux
+
+npm install redux
+npm install --save-dev deep-freeze
