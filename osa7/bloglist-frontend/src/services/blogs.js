@@ -1,5 +1,6 @@
 import axios from 'axios'
 import storage from '../utils/storage'
+
 const baseUrl = '/api/blogs'
 
 const getConfig = () => {
@@ -23,19 +24,14 @@ const update = (blog) => {
   return request.then(response => response.data)
 }
 
+const comment = (id, comment) => {
+  const request = axios.post(`${baseUrl}/${id}/comments`, { comment }, getConfig())
+  return request.then(response => response.data)
+}
+
 const remove = (id) => {
   const request = axios.delete(`${baseUrl}/${id}`, getConfig())
   return request.then(response => response.data)
 }
 
-const getComments = (id) => {
-  const request = axios.get(`${baseUrl}/${id}/comments`)
-  return request.then(response => response.data)
-}
-
-const comment = async (object) => {
-  const response = await axios.post(`${baseUrl}/${object.id}/comments`, object, getConfig())
-  return response.data
-}
-
-export default { getAll, create, update, remove, getComments, comment }
+export default { getAll, create, update, remove, comment }

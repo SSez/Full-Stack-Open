@@ -1,20 +1,23 @@
-import React, { useState } from "react"
-import { Form, Button } from "react-bootstrap"
+import React, { useState } from 'react'
+import { Form, Button } from 'react-bootstrap'
 
 const BlogForm = ({ createBlog }) => {
-  const [setTitle, setNewTitle] = useState("")
-  const [setAuthor, setNewAuthor] = useState("")
-  const [setURL, setNewURL] = useState("")
+  const [setTitle, setNewTitle] = useState('')
+  const [setAuthor, setNewAuthor] = useState('')
+  const [setURL, setNewURL] = useState('')
 
   const handleTitleChange = (event) => {
     setNewTitle(event.target.value)
   }
+
   const handleAuthorChange = (event) => {
     setNewAuthor(event.target.value)
   }
+
   const handleURLChange = (event) => {
     setNewURL(event.target.value)
   }
+
   const addBlog = (event) => {
     event.preventDefault()
     createBlog({
@@ -22,11 +25,11 @@ const BlogForm = ({ createBlog }) => {
       author: setAuthor,
       url: setURL,
     })
-
-    setNewTitle("")
-    setNewAuthor("")
-    setNewURL("")
+    setNewTitle('')
+    setNewAuthor('')
+    setNewURL('')
   }
+
   return (
     <div>
       <h2>Create new</h2>
