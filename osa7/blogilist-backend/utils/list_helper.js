@@ -1,44 +1,57 @@
-let _ = require('lodash')
-const dummy = (blogs) => 1
+const _ = require('lodash')
 
 const totalLikes = (blogs) => {
-  return blogs.length === 0 ? 0 : blogs.map(a => a.likes).reduce((a, b) => a + b, 0)
+  if ( blogs.length===0) {
+    return 0
+  }
+
+  return blogs.reduce((s, b) => s + b.likes, 0)
 }
 
 const favoriteBlog = (blogs) => {
-  blogs.sort((a, b) => b.likes - a.likes)
-  return blogs[0]
+  if ( blogs.length===0) {
+    return null
+  }
+
+  const withMostVotes = (best, current) => {
+    if ( !best ) {
+      return current
+    }
+
+    return best.likes > current.likes ? best : current
+  }
+
+  return blogs.reduce(withMostVotes , null)
 }
 
 const mostBlogs = (blogs) => {
-  let order = _.orderBy(blogs, "author", "desc")
-  let filterOrder = order.filter(x => x.author === order[0].author).map(x => x.author)
-  var obj = { "author": filterOrder[0], "blogs": filterOrder.length }
-  return obj
+  if ( blogs.length===0) {
+    return null
+  }
+
+  const blogsByAuthor = _.toPairs(_.groupBy(blogs, b => b.author))
+  const blockCountByAuthor = blogsByAuthor.map(([author, blogs]) => ({
+    author, 
+    blogs: blogs.length
+  }) ).sort((a1, a2 ) => a2.blogs - a1.blogs)
+
+  return blockCountByAuthor[0]
 }
 
 const mostLikes = (blogs) => {
-  let order = _.orderBy(blogs, ['author', 'likes'], ['desc', 'desc'])
-  var array = []
-  let obj = { "author": order[0].author, "likes": 0 }
-  order.forEach(x => {
-    if (x.author === obj.author) {
-      obj.likes += x.likes
-    } else {
-      array.push(obj)
-      obj.author = x.author
-      obj.likes = 0
-      obj.likes += x.likes
-    }
-  })
-  let newOrder = _.orderBy(array, 'likes', 'desc');
-  return newOrder[0]
+  if ( blogs.length===0) {
+    return null
+  }
+
+  const blogsByAuthor = _.toPairs(_.groupBy(blogs, b => b.author))
+  const likeCountByAuthor = blogsByAuthor.map(([author, blogs]) => ({
+    author, 
+    likes: blogs.reduce((s, b) => s + b.likes, 0)
+  }) ).sort((a1, a2 ) => a2.likes - a1.likes)
+
+  return likeCountByAuthor[0]
 }
 
 module.exports = {
-    dummy,
-    totalLikes,
-    favoriteBlog,
-    mostBlogs,
-    mostLikes
+  totalLikes, favoriteBlog, mostBlogs, mostLikes
 }
