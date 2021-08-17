@@ -69,30 +69,6 @@ const App = () => {
     </Togglable>
   )
 
-/*
-  const addBlog = async (blogObject) => {
-    try {
-      blogFormRef.current.toggleVisibility()
-      dispatch(createBlog(blogObject))
-      /*
-      setMessage({
-        message: `a new blog: ${newBlog.title} By ${newBlog.author} Added`,
-        type: 'success'
-      })
-      setTimeout(() => { setMessage(null) }, 5000)
-      dispatch(setNotification(`a new blog added`, 5))
-    } catch (exception) {
-      console.log(exception)
-      dispatch(setNotification(exception.response.data.error, 5))
-      setMessage({
-        message: exception.response.data.error,
-        type: 'error'
-      })
-      setTimeout(() => { setMessage(null) }, 5000)
-    }
-  }
-*/
-
   return (
     <Router>
       <Menu user={user} handleLogout={handleLogout} />
