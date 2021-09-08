@@ -1,29 +1,29 @@
 # Part 0
 
 ### 0.4: New note:
-* Kaavio:
+* Chart:
 ```
 0.4_new_note.txt
 ```
-* Kuva:
+* Picture:
 ```
 0.4_new_note.png
 ```
 ### 0.5: Single Page App
-* Kaavio:
+* Chart:
 ```
 0.5_Single_Page_App.txt
 ```
-* Kuva:
+* Picture:
 ```
 0.5_Single_Page_App.png
 ```
 ### 0.6: New note
-* Kaavio:
+* Chart:
 ```
 0.6_new_note.txt
 ```
-* Kuva:
+* Picture:
 ```
 0.6_new_note.png
 ```
