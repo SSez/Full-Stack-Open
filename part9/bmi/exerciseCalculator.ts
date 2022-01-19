@@ -30,7 +30,7 @@ const parseArgs = (args: Array<string>): arrValues => {
 export const calculateExercises = (arr: Array<number>, target: number): Result => {
   const average = arr.reduce((a, b) => a + b, 0) / arr.length;
   const ratings = {
-    0: 'you did nothing, your lazy shit',
+    0: 'you did nothing',
     1: 'you can do more',
     2: 'not too bad but could be better',
     3: 'good job'
